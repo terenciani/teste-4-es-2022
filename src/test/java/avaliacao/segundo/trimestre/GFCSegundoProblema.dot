@@ -1,0 +1,43 @@
+/* https://neps.academy/br/exercise/163 
+ * Complexidade Ciclomática = 4
+ * Caminhos:
+ * 1 - ABCDBEFGHIFJ (BASE)
+ * 2 - ABEFGHIFJ
+ * 3 - ABCDBEFJ
+ * 4 - ABCDBEFGIFJ
+*/ 
+
+digraph {
+    subgraph letras {
+        "A" -> "B"
+        "B" -> "C" [label="v"]
+        "C" -> "D"
+        "D" -> "B"
+        "B" -> "E" [label="f"]
+        "E" -> "F"
+        "F" -> "J" [label="f"]
+        "F" -> "G" [label="v"]
+        "G" -> "H" [label="v"]
+        "G" -> "I" [label="f"]
+        "H" -> "I"
+        "I" -> "F"
+        
+        "J" [shape="doublecircle"]
+    }
+    subgraph linhas {
+        "17, 18, 19, 20, 21, 22.1" -> "22.2"
+        "22.2" -> "23, 24" [label="v"]
+        "23, 24" -> "22.3"
+        "22.3" -> "22.2"
+        "22.2" -> "25, 26, 27.1" [label="f"]
+        "25, 26, 27.1" -> "27.2"
+        "27.2" -> "30, 31" [label="f"]
+        "27.2" -> "28" [label="v"]
+        "28" -> "29" [label="v"]
+        "28" -> "27.3" [label="f"]
+        "29" -> "27.3"
+        "27.3" -> "27.2"
+        
+        "30, 31" [shape="doublecircle"]
+    }
+}

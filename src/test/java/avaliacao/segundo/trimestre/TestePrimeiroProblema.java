@@ -1,10 +1,8 @@
 package avaliacao.segundo.trimestre;
 
 import static org.junit.Assert.assertEquals;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,13 +30,13 @@ public class TestePrimeiroProblema {
 		Problemas.primeiroProblema(1);
 		assertEquals("0", outContent.toString());
 	}
-	
+
 	@Test
 	public void caminhoABCDG() {
 		Problemas.primeiroProblema(2);
 		assertEquals("01", outContent.toString().replaceAll("\\s+", ""));
 	}
-	
+
 	@Test
 	public void caminhoABCDEFG() {
 		Problemas.primeiroProblema(5);

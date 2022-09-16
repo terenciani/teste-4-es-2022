@@ -54,4 +54,10 @@ public class Problemas {
 		for (int i = 0; i < quantidadeImpares; i++) // imprime ímpares
 			System.out.print(impares[i] + " ");
 	}
+
+	public static void main(String[] args) {
+
+		int[] numeros = { 5, 3, 1, 3, 5, 9, 3, 8, 7, 5 };
+		Problemas.terceiroProblema(numeros);
+	}
 }
