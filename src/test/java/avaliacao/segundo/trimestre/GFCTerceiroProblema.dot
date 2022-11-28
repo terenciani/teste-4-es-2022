@@ -1,11 +1,9 @@
 /* https://neps.academy/br/exercise/194 
  * Complexidade Ciclomática = 5
  * Caminhos:
- * 1 - ABCDFBGHIJHKLMNLO (BASE)
- * 2 - ABGHIJHKLMNLO
- * 3 - ABCEFBGHIJHKLMNLO
- * 4 - ABCDFBGHKLMNLO
- * 5 - ABCDFBGHIJHKLO
+ * 1 - ABCDFBG (BASE)
+ * 2 - ABG
+ * 3 - ABCEFBG
 */ 
 digraph {
     subgraph letras {
@@ -17,39 +15,32 @@ digraph {
         "E" -> "F"
         "F" -> "B"
         "B" -> "G" [label="f"]
-        "G" -> "H"
-        "H" -> "I" [label="v"]
-        "I" -> "J"
-        "J" -> "H"
-        "H" -> "K" [label="f"]
-        "K" -> "L"
-        "L" -> "M" [label="v"]
-        "M" -> "N"
-        "N" -> "L"
-        "L" -> "O" [label="f"]
         
-        "O" [shape="doublecircle"]
+        
+        "G" [shape="doublecircle"]
     }
     subgraph linhas {
-        "34, 35, 36, 37, 38.1" -> "38.2"
-        "38.2" -> "39, 40" [label="v"]
-        "39, 40" -> "41, 42" [label="v"]
-        "39, 40" -> "43, 44, 45" [label="f"]
-        "41, 42" -> "46, 38.3"
-        "43, 44, 45" -> "46, 38.3"
-        "46, 38.3" -> "38.2"
-        "38.2" -> "47, 48.1" [label="f"]
-        "47, 48.1" -> "48.2"
-        "48.2" -> "49" [label="v"]
-        "49" -> "48.3"
-        "48.3" -> "48.2"
-        "48.2" -> "50, 51.1" [label="f"]
-        "50, 51.1" -> "51.2"
-        "51.2" -> "52" [label="v"]
-        "52" -> "51.3"
-        "51.3" -> "51.2"
-        "51.2" -> "53" [label="f"]
-        
-        "53" [shape="doublecircle"]
+        "33, 34, 35, 36, 37.1" -> "37.2"
+        "37.2" -> "38" [label="v"]
+        "38" -> "39, 40" [label="v"]
+        "38" -> "41, 42, 43" [label="f"]
+        "39, 40" -> "37.3"
+        "41, 42, 43" -> "37.3"
+        "37.3" -> "37.2"
+        "37.2" -> "46, 47, 48" [label="f"]
+                
+        "46, 47, 48" [shape="doublecircle"]
+    }
+    subgraph def {
+        "def numeros[], retorno, pares[], impares[], i" -> "use i"
+        "use i" -> "use numeros[]" [label="v"]
+        "use numeros[]" -> "def pares[]; use numeros[]" [label="v"]
+        "use numeros[]" -> "def impares[]; use numeros[]" [label="f"]
+        "def pares[]; use numeros[]" -> "def i"
+        "def impares[]; use numeros[]" -> "def i"
+        "def i" -> "use i"
+        "use i" -> "def retorno; use retorno" [label="f"]
+                
+        "def retorno; use retorno" [shape="doublecircle"]
     }
 }

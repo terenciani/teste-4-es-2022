@@ -32,14 +32,14 @@ digraph {
     }
 
     subgraph def {
-        "def n, ultimo, penultimo, atual, resposta; use n" -> "use i" [label="f"]
+        "def n, ultimo, penultimo, atual, resposta; use n" -> "use resposta" [label="f"]
         "def n, ultimo, penultimo, atual, resposta; use n" -> "def resposta, i" [label="v"]
         "def resposta, i" -> "use i, n"
         "use i, n" -> "use atual, ultimo, penultimo, resposta" [label="v"]
         "use atual, ultimo, penultimo, resposta" -> "def i" 
         "def i" -> "use i, n"
-        "use i, n" -> "use i" [label="f"]
+        "use i, n" -> "use resposta" [label="f"]
         
-        "use i" [shape="doublecircle"]
+        "use resposta" [shape="doublecircle"]
     }
 }
