@@ -1,34 +1,45 @@
-/* https://neps.academy/br/exercise/173 
+/* https://neps.academy/br/exercise/F3 
  * Complexidade Ciclomática: 3
  * Caminhos: 
- * 1 - ABG (BASE)
- * 2 - ABCDG
- * 3 - ABCDEFG
+ * 1 - ABCDECF (BASE)
+ * 2 - AF
+ * 3 - ABCF
 */
 
 digraph {
     subgraph letra{
-        "A" -> "B"
-        "B" -> "C" [label="v"]
-        "B" -> "G" [label="f"]
-        "C" -> "D"
-        "D" -> "E" [label="v"]
-        "E" -> "F"
-        "F" -> "D"
-        "D" -> "G" [label="f"]
+        "A" -> "F" [label="f"]
+        "A" -> "B" [label="v"]
+        "B" -> "C"
+        "C" -> "D" [label="v"]
+        "D" -> "E" 
+        "E" -> "C"
+        "C" -> "F" [label="f"]
         
-        "G" [shape="doublecircle"]
+        "F" [shape="doublecircle"]
     }
+
     subgraph linha {
-        "4, 5" -> "6"
-        "6" -> "7, 8.1" [label="v"]
-        "6" -> "14" [label="f"]
-        "7, 8.1" -> "8.2"
-        "8.2" -> "9, 10, 11, 12"
-        "9, 10, 11, 12" -> "8.3"
-        "8.3" -> "8.2"
-        "8.2" -> "14"
+        "5, 6, 7, 8" -> "17" [label="f"]
+        "5, 6, 7, 8" -> "9, 10.1" [label="v"]
+        "9, 10.1" -> "10.2"
+        "10.2" -> "11, 12, 13, 14" [label="v"]
+        "11, 12, 13, 14" -> "10.3" 
+        "10.3" -> "10.2"
+        "10.2" -> "17" [label="f"]
         
-        "14" [shape="doublecircle"]
+        "17" [shape="doublecircle"]
+    }
+
+    subgraph def {
+        "def n, ultimo, penultimo, atual, resposta; use n" -> "use i" [label="f"]
+        "def n, ultimo, penultimo, atual, resposta; use n" -> "def resposta, i" [label="v"]
+        "def resposta, i" -> "use i, n"
+        "use i, n" -> "use atual, ultimo, penultimo, resposta" [label="v"]
+        "use atual, ultimo, penultimo, resposta" -> "def i" 
+        "def i" -> "use i, n"
+        "use i, n" -> "use i" [label="f"]
+        
+        "use i" [shape="doublecircle"]
     }
 }
