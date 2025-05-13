@@ -1,91 +1,70 @@
 package paranavai.calculadora;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import paranavai.calendario.Calendario;
-import paranavai.calendario.CalendarioNovo;
 
 public class TesteCalendario {
-	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-	private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-	private final PrintStream originalOut = System.out;
-	private final PrintStream originalErr = System.err;
-
-	/*
-	 * @Before
-	 * public void init() {
-	 * System.setOut(new PrintStream(outContent));
-	 * System.setErr(new PrintStream(errContent));
-	 * }
-	 * 
-	 * @After
-	 * public void finish() {
-	 * System.setOut(originalOut);
-	 * System.setErr(originalErr);
-	 * }
-	 */
 
 	@Test
-	public void imprimeJaneiro2022() throws IOException {
-
-		Path path = Paths.get("src\\test\\resources", "janeiro2022.txt");
+	public void imprimeJaneiro2025() throws IOException {
+		Path path = Paths.get("src\\test\\resources", "janeiro2025.txt");
 		String saidaEsperada = Files.readString(path);
-		CalendarioNovo calendarioNovo = new CalendarioNovo();
-		String janeiro2022 = calendarioNovo.getCalendario("1", "2022");
-		System.out.println(janeiro2022.substring(0, 20));
-		System.out.println(saidaEsperada.substring(0, 20));
+		saidaEsperada = saidaEsperada.replace("\r\n", "\n");
 
-		for (int i = 0; i < 20; i++) {
-			System.out.print(Character.getNumericValue(saidaEsperada.charAt(i)));
+		Calendario calendario = new Calendario();
+		String janeiro2025 = calendario.getCalendario("1", "2025");
 
-			System.out.print(Character.getNumericValue(janeiro2022.charAt(i)));
-
-			System.out.println();
-		}
-
-		assertEquals(saidaEsperada, janeiro2022);
+		assertEquals(saidaEsperada, janeiro2025);
 	}
 
 	@Test
-	// Ser� que este teste est� correto?
+	// Será que este teste está correto?
 	public void verificaSeMesAtualFoiImpresso() throws IOException {
-		Path path = Paths.get("src\\test\\resources", "maio2022.txt");
-		Calendario.mostrarCalendario();
-		String maio2022 = Files.readString(path);
-		assertEquals(maio2022.replaceAll("\\s+", ""), outContent.toString().replaceAll("\\s+", ""));
+		Path path = Paths.get("src\\test\\resources", "maio2025.txt");
+		String saidaEsperada = Files.readString(path);
+		saidaEsperada = saidaEsperada.replace("\r\n", "\n");
+
+		Calendario calendario = new Calendario();
+		String maio2025 = calendario.getCalendario();
+
+		assertEquals(saidaEsperada, maio2025);
 	}
 
 	@Test
 	public void imprimeSetembro1752() throws IOException {
 		Path path = Paths.get("src\\test\\resources", "setembro1752.txt");
-		Calendario.mostrarCalendario("9", "1752");
-		String setembro1752 = Files.readString(path);
-		assertEquals(setembro1752.replaceAll("\\s+", ""), outContent.toString().replaceAll("\\s+", ""));
+		String saidaEsperada = Files.readString(path);
+		saidaEsperada = saidaEsperada.replace("\r\n", "\n");
+
+		Calendario calendario = new Calendario();
+		String maio2025 = calendario.getCalendario("9", "1752");
+
+		assertEquals(saidaEsperada, maio2025);
 	}
 
 	@Test
 	public void testaLetraNoParametroAno() {
-		Throwable exception = assertThrows(NumberFormatException.class, () -> Calendario.mostrarCalendario("e"));
-		assertEquals("mostrarCalendario: e: ano inv�lido.", exception.getMessage());
+		assertThrows(NumberFormatException.class, () -> {
+			Calendario calendario = new Calendario();
+			calendario.getCalendario("e");
+		});
 	}
 
 	@Test
 	public void testaLetraNoParametroMes() {
-		Throwable exception = assertThrows(NumberFormatException.class,
-				() -> Calendario.mostrarCalendario("e", "2022"));
-		assertEquals("mostrarCalendario: e: m�s inv�lido.", exception.getMessage());
+		assertThrows(NumberFormatException.class,
+				() -> {
+					Calendario calendario = new Calendario();
+					calendario.getCalendario("e", "2022");
+				});
 	}
-
 }

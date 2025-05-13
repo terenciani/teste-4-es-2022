@@ -3,75 +3,69 @@ package paranavai.calendario;
 import java.util.Calendar;
 
 public class Calendario {
-	static String diaDaSemana = "Do Se Te Qa Qi Se Sa";
+	private String diaDaSemana = "Do Se Te Qa Qi Se Sa";
 
-	static String meses[] = new String[] { "Janeiro", "Fevereiro", "Mar�o", "Abril", "Maio", "Junho", "Julho", "Agosto",
+	private String meses[] = new String[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
+			"Agosto",
 			"Setembro", "Outubro", "Novembro", "Dezembro" };
 
-	static int diasPorMes[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, };
+	private int diasPorMes[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, };
 
-	public static void mostrarCalendario() {
+	public String getCalendario() {
 		Calendar cl = Calendar.getInstance();
 		int mostrarMes = cl.get(Calendar.MONTH) + 1;
 		int mostrarAno = cl.get(Calendar.YEAR);
 
-		imprimeMesPorAno(mostrarMes, mostrarAno);
+		return getMesPorAno(mostrarMes, mostrarAno);
 	}
 
-	public static void mostrarCalendario(String ano) {
+	public String getCalendario(String ano) {
 		int mostrarAno = validaAno(ano);
 		if (mostrarAno == -1) {
-			throw new NumberFormatException("mostrarCalendario: " + ano + ": ano inv�lido.");
-			// System.err.printf("mostrarCalendario: %s: ano inv�lido.\n", ano);
-			// System.exit(2);
+			throw new NumberFormatException("getCalendario: " + ano + ": ano inválido.");
 		}
+		String calendario = "";
 		for (int mostrarMes = 1; mostrarMes <= 12; mostrarMes++) {
-			imprimeMesPorAno(mostrarMes, mostrarAno);
-			System.out.println();
+			calendario += getMesPorAno(mostrarMes, mostrarAno) + "\n";
 		}
+		return calendario;
 	}
 
-	public static void mostrarCalendario(String mes, String ano) {
+	public String getCalendario(String mes, String ano) {
 		int mostrarMes = validaMes(mes);
 		int mostrarAno = validaAno(ano);
 		if (mostrarMes == -1) {
-			throw new NumberFormatException("mostrarCalendario: " + mes + ": m�s inv�lido.");
-			// System.err.printf("mostrarCalendario: %s: m�s inv�lido.\n", mes);
-			// System.exit(1);
+			throw new NumberFormatException("getCalendario: " + mes + ": mês inválido.");
 		}
 		if (mostrarAno == -1) {
-			throw new NumberFormatException("mostrarCalendario: " + ano + ": ano inv�lido.");
-			// System.err.printf("mostrarCalendario: %s: ano inv�lido.\n", ano);
-			// System.exit(2);
+			throw new NumberFormatException("getCalendario: " + ano + ": ano inválido.");
 		}
 
-		imprimeMesPorAno(mostrarMes, mostrarAno);
+		return getMesPorAno(mostrarMes, mostrarAno);
 	}
 
-	public static void mostrarCalendario(String... variosParametros) {
-		mostrarCalendario(variosParametros[0], variosParametros[1]);
+	public String getCalendario(String... variosParametros) {
+		return getCalendario(variosParametros[0], variosParametros[1]);
 	}
 
-	static void imprimeMesPorAno(int mes, int ano) {
-		System.out.printf("   %s %d\n", meses[mes - 1], ano);
-		System.out.printf("%s\n", diaDaSemana);
+	private String getMesPorAno(int mes, int ano) {
+		String mesFormatado = String.format("   %s %d\n", this.meses[mes - 1], ano);
+		mesFormatado += String.format("%s\n", this.diaDaSemana);
 		String s = calendario(primeiroDiaMes(mes, ano), numeroDeDiasNoMes(mes, ano));
-		System.out.println(s);
+		return mesFormatado + s;
 	}
 
 	/***
 	 * 
 	 * @param mes
-	 * @return -1 se m�s inv�lido, sen�o retorna o par�metro com tipo int
+	 * @return -1 se mês inválido, senão retorna o parâmetro com tipo int
 	 */
-	static int validaMes(String mes) {
+	private int validaMes(String mes) {
 		int mostrarMes = 0;
 		try {
 			mostrarMes = Integer.parseInt(mes);
 		} catch (Exception e) {
-			// throw new NumberFormatException("mostrarCalendario: " + mes + ": entrada
-			// inv�lida.");
-			// System.exit(1);
+			throw new NumberFormatException("getCalendario: " + mes + ": entrada inváida.");
 		}
 		if (mostrarMes < 1 || mostrarMes > 12) {
 			return -1;
@@ -82,16 +76,14 @@ public class Calendario {
 	/***
 	 * 
 	 * @param ano
-	 * @return -1 se ano inv�lido, sen�o retorna o par�metro com tipo int
+	 * @return -1 se ano inválido, senão retorna o parâmetro com tipo int
 	 */
-	static int validaAno(String ano) {
+	private int validaAno(String ano) {
 		int mostrarAno = 0;
 		try {
 			mostrarAno = Integer.parseInt(ano);
 		} catch (Exception e) {
-			// throw new NumberFormatException("mostrarCalendario: " + ano + ": entrada
-			// inv�lida.");
-			// System.exit(1);
+			throw new NumberFormatException("getCalendario: " + ano + ": entrada inválida.");
 		}
 		if (mostrarAno < 1 || mostrarAno > 9999) {
 			return -1;
@@ -99,7 +91,7 @@ public class Calendario {
 		return mostrarAno;
 	}
 
-	static int primeiroDiaMes(int mes, int ano) {
+	private int primeiroDiaMes(int mes, int ano) {
 		int dia = 0;
 		if (ehBissexto(ano) && mes > 2)
 			dia++;
@@ -112,7 +104,7 @@ public class Calendario {
 		return dia;
 	}
 
-	static int numeroDeDiasNoMes(int mes, int ano) {
+	private int numeroDeDiasNoMes(int mes, int ano) {
 		if (ehBissexto(ano) && mes == 2)
 			return 29;
 		if (ano == 1752 && mes == 9)
@@ -120,7 +112,7 @@ public class Calendario {
 		return diasPorMes[mes];
 	}
 
-	static boolean ehBissexto(int ano) {
+	private boolean ehBissexto(int ano) {
 		if (ano <= 1752) {
 			if (ano % 4 == 0)
 				return true;
@@ -137,7 +129,7 @@ public class Calendario {
 		return false;
 	}
 
-	static String calendario(int deslocamento, int qtdDeDias) {
+	private String calendario(int deslocamento, int qtdDeDias) {
 		int qtdDiasNaSemana = deslocamento + 1;
 		if (qtdDeDias == 19)
 			return "       1  2 14 15 16\n17 18 19 20 21 22 23\n24 25 26 27 28 29 30";
@@ -159,19 +151,19 @@ public class Calendario {
 
 	/**
 	 * @param ano
-	 * @return dia da semana do 1� de janeiro dado um determinado ano
+	 * @return dia da semana do primeiro de janeiro dado um determinado ano
 	 */
-	static private int diaDaSemanaDoPrimeiroJaneiro(int ano) {
+	private int diaDaSemanaDoPrimeiroJaneiro(int ano) {
 		int dia;
-		// Calend�rio Gregoriano possui um dia extra a cada 4 anos
+		// Calendário Gregoriano possui um dia extra a cada 4 anos
 		dia = 4 + ano + (ano + 3) / 4;
 
-		// Calend�rio Juliano tem menos 3 dias a cada 400 anos
+		// Calendário Juliano tem menos 3 dias a cada 400 anos
 		if (ano > 1800) {
 			dia -= (ano - 1701) / 100;
 			dia += (ano - 1601) / 400;
 		}
-		// Instante da grande mudan�a de calend�rio
+		// Instante da grande mudança de calendário
 		if (ano > 1752)
 			dia += 3;
 
