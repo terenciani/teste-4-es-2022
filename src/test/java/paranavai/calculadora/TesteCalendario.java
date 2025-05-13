@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import paranavai.calendario.Calendario;
+import paranavai.calendario.CalendarioNovo;
 
 public class TesteCalendario {
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -22,20 +23,43 @@ public class TesteCalendario {
 	private final PrintStream originalOut = System.out;
 	private final PrintStream originalErr = System.err;
 
-	@Before
-	public void init() {
-		System.setOut(new PrintStream(outContent));
-		System.setErr(new PrintStream(errContent));
-	}
+	/*
+	 * @Before
+	 * public void init() {
+	 * System.setOut(new PrintStream(outContent));
+	 * System.setErr(new PrintStream(errContent));
+	 * }
+	 * 
+	 * @After
+	 * public void finish() {
+	 * System.setOut(originalOut);
+	 * System.setErr(originalErr);
+	 * }
+	 */
 
-	@After
-	public void finish() {
-		System.setOut(originalOut);
-		System.setErr(originalErr);
+	@Test
+	public void imprimeJaneiro2022() throws IOException {
+
+		Path path = Paths.get("src\\test\\resources", "janeiro2022.txt");
+		String saidaEsperada = Files.readString(path);
+		CalendarioNovo calendarioNovo = new CalendarioNovo();
+		String janeiro2022 = calendarioNovo.getCalendario("1", "2022");
+		System.out.println(janeiro2022.substring(0, 20));
+		System.out.println(saidaEsperada.substring(0, 20));
+
+		for (int i = 0; i < 20; i++) {
+			System.out.print(Character.getNumericValue(saidaEsperada.charAt(i)));
+
+			System.out.print(Character.getNumericValue(janeiro2022.charAt(i)));
+
+			System.out.println();
+		}
+
+		assertEquals(saidaEsperada, janeiro2022);
 	}
 
 	@Test
-	// Será que este teste está correto?
+	// Serï¿½ que este teste estï¿½ correto?
 	public void verificaSeMesAtualFoiImpresso() throws IOException {
 		Path path = Paths.get("src\\test\\resources", "maio2022.txt");
 		Calendario.mostrarCalendario();
@@ -54,14 +78,14 @@ public class TesteCalendario {
 	@Test
 	public void testaLetraNoParametroAno() {
 		Throwable exception = assertThrows(NumberFormatException.class, () -> Calendario.mostrarCalendario("e"));
-		assertEquals("mostrarCalendario: e: ano inválido.", exception.getMessage());
+		assertEquals("mostrarCalendario: e: ano invï¿½lido.", exception.getMessage());
 	}
 
 	@Test
 	public void testaLetraNoParametroMes() {
 		Throwable exception = assertThrows(NumberFormatException.class,
 				() -> Calendario.mostrarCalendario("e", "2022"));
-		assertEquals("mostrarCalendario: e: mês inválido.", exception.getMessage());
+		assertEquals("mostrarCalendario: e: mï¿½s invï¿½lido.", exception.getMessage());
 	}
 
 }
